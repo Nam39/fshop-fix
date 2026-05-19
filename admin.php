@@ -154,22 +154,6 @@ $result = search($conn, 'taikhoan', ['username'], 'idtk', 10, $page_num);
             <button class="btn btn-outline-light me-3" id="toggleSidebar">☰</button>
             <div class="d-flex align-items-center">
 
-                <div class="">
-                    <?php $currentPage = $_GET['page'] ?? 'qltk'; ?>
-                    <form action="" method="GET" class="d-flex me-3" style="max-width: 500px;">
-                        <input type="hidden" name="page" value="<?= htmlspecialchars($currentPage) ?>">
-
-                        <select name="type" class="form-select me-2" style="max-width: 150px;">
-                            <option value="taikhoan" <?= (($_GET['type'] ?? '') == 'taikhoan') ? 'selected' : '' ?>>Tài khoản</option>
-                            <option value="sanpham" <?= (($_GET['type'] ?? '') == 'sanpham') ? 'selected' : '' ?>>Sản phẩm</option>
-                            <option value="users" <?= (($_GET['type'] ?? '') == 'nguoidung') ? 'users' : '' ?>>Người dùng</option>
-                        </select>
-
-                        <input type="text" name="query" class="form-control me-2" placeholder="Tìm kiếm..." style="width: 200px;" value="<?= htmlspecialchars($_GET['query'] ?? '') ?>">
-                        <button type="submit" class="btn btn-success"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>
-
-                </div>
                 <i class="fa-solid fa-bell text-white me-3"></i>
                 <?php if (isset($_SESSION['idtk'])): ?>
                     <div class="dropdown">
@@ -204,7 +188,7 @@ $result = search($conn, 'taikhoan', ['username'], 'idtk', 10, $page_num);
 
 
     <!-- Bootstrap JS -->
-    <script src="assets/bootstrap/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoAVF0s0jM6w5LecxBbs6x3Ejf6tiGkwfF0EJp+uCOmLASj" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
         const toggleButton = document.getElementById('toggleSidebar');
         const sidebar = document.getElementById('sidebar');

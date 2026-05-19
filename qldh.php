@@ -83,10 +83,11 @@ function getStatusBadge($status) {
             <div class="mb-3 ">
                 <div class="d-flex flex-wrap">
                     <div class="col-12 col-md-6">
-                        <form action="" method="GET" class="d-flex" style="max-width: 450px;">
+                        <form action="" method="GET" class="d-flex align-items-center" style="max-width: 550px;">
                             <input type="hidden" name="page" value="qldh">
-                            <input type="text" name="queryidnd" class="form-control me-2" placeholder="Tìm theo mã đơn hàng..." style="width: 200px;">
-                            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Tìm mã ĐH</button>
+                            <input type="text" name="queryidnd" class="form-control me-2" placeholder="Tìm theo mã đơn hàng..." style="width: 200px;" value="<?= isset($_GET['queryidnd']) ? htmlspecialchars($_GET['queryidnd']) : '' ?>">
+                            <button type="submit" class="btn btn-secondary me-2"><i class="fa-solid fa-magnifying-glass"></i> Tìm mã ĐH</button>
+                            <a href="admin.php?page=qldh" class="btn btn-outline-secondary"><i class="fa-solid fa-arrows-rotate"></i> Làm mới</a>
                         </form>
                     </div>
 

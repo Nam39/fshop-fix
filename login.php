@@ -33,20 +33,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Kiểm tra mật khẩu
             if ($password==$user['password']) {
-
-                // Đăng nhập thành công
-                $_SESSION['idtk'] = $user['idtk'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['roleId'] = $user['roleId'];
-                if($_SESSION['roleId'] != 1){
-                    header("Location: index.php");
-                exit();
+                if ($user['trangthai'] == 0) {
+                    $mess = "Tài khoản của bạn đã bị khóa! Vui lòng liên hệ quản trị viên để được hỗ trợ.";
+                } else {
+                    // Đăng nhập thành công
+                    $_SESSION['idtk'] = $user['idtk'];
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['roleId'] = $user['roleId'];
+                    if($_SESSION['roleId'] != 1){
+                        header("Location: index.php");
+                        exit();
+                    }
+                    header("Location: admin.php");
+                    exit();
                 }
-                header("Location: admin.php");
-                exit();
-
             } else {
-
                 $mess = "Sai mật khẩu!";
             }
 
@@ -152,13 +153,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required>
         </div>
         <div class="d-flex justify-content-end">
-            <a href="#" class="text-white">Quên mật khẩu?</a>
+            <a href="./quenmatkhau.php" class="text-white">Quên mật khẩu?</a>
         </div>
         <button type="submit" class="btn btn-custom w-100 mt-3">Đăng nhập</button>
     </form>
     <p class="mt-3">Không có tài khoản? <a href="./signup.php" class="text-white fw-bold">Đăng ký</a></p>
 
-    <?= $mess ?>
+    <?php if (!empty($mess)): ?>
+        <div class="alert alert-danger mt-3 py-2 border-0 text-center" role="alert" style="background: rgba(220, 53, 69, 0.25); color: #ffccd0; backdrop-filter: blur(5px); border-radius: 10px;">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i> <?= htmlspecialchars($mess) ?>
+        </div>
+    <?php endif; ?>
 </div>
 
 <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -93,6 +93,10 @@ if (isset($_SESSION['idtk'])) {
             position: relative;
         }
 
+        .aff-child {
+            pointer-events: none;
+        }
+
         .aff-child::after {
             content: "";
             position: absolute;
@@ -101,6 +105,7 @@ if (isset($_SESSION['idtk'])) {
             background-color: transparent;
             width: 100%;
             height: 30px;
+            pointer-events: none;
         }
 
         .dropdown-divider {
@@ -145,7 +150,7 @@ if (isset($_SESSION['idtk'])) {
                                 <a href="./donhang.php">Đơn hàng của tôi</a>
                                 <a href="./doimatkhau.php">Đổi mật khẩu</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="./logout.php" class="logoutbtn" onclick="return confirm('Bạn có muốn đăng xuất không?');">Đăng xuất</a>
+                                <a href="logout.php" class="logoutbtn" onclick="return confirm('Bạn có muốn đăng xuất không?');">Đăng xuất</a>
                             </div>
 
                             <div class="aff-child"></div>
