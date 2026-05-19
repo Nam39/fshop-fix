@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $xacnhan = trim($_POST['xacnhan']);
 
     if (empty($matkhaucu) || empty($matkhaumoi) || empty($xacnhan)) {
-        $thongbao = "<div class='alert alert-warning border-0' style='background: rgba(255, 193, 7, 0.25); color: #ffe28c; backdrop-filter: blur(5px); border-radius: 10px;'><i class='fa-solid fa-triangle-exclamation me-2'></i> Vui lòng điền đầy đủ thông tin!</div>";
+        $thongbao = "<div class='alert border-0 text-center py-2.5 px-3 rounded-3 fw-semibold mb-4 animate-shake' role='alert' style='background: rgba(245, 158, 11, 0.12); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.25);'><i class='fa-solid fa-circle-exclamation me-2'></i> Vui lòng điền đầy đủ thông tin!</div>";
     } else {
         $sql = "SELECT password FROM taikhoan WHERE idtk = ?";
         $stmt = $conn->prepare($sql);
@@ -33,25 +33,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $stmt2 = $conn->prepare($update);
                     $stmt2->bind_param("si", $matkhaumoi, $idtk);
                     if ($stmt2->execute()) {
-                        $thongbao = "<div class='alert alert-success border-0' style='background: rgba(40, 167, 69, 0.25); color: #a3ffb4; backdrop-filter: blur(5px); border-radius: 10px;'><i class='fa-solid fa-circle-check me-2'></i> Đổi mật khẩu thành công! Đang chuyển hướng đăng nhập...</div>";
+                        $thongbao = "<div class='alert border-0 text-center py-2.5 px-3 rounded-3 fw-semibold mb-4' role='alert' style='background: rgba(16, 185, 129, 0.12); color: #a7f3d0; border: 1px solid rgba(16, 185, 129, 0.25);'><i class='fa-solid fa-circle-check me-2'></i> Đổi mật khẩu thành công! Đang chuyển hướng đăng xuất...</div>";
                         echo "<script>
                             setTimeout(function() {
                                 window.location.href = 'logout.php';
                             }, 2000);
                         </script>";
                     } else {
-                        $thongbao = "<div class='alert alert-danger border-0' style='background: rgba(220, 53, 69, 0.25); color: #ffccd0; backdrop-filter: blur(5px); border-radius: 10px;'><i class='fa-solid fa-triangle-exclamation me-2'></i> Lỗi khi cập nhật mật khẩu.</div>";
+                        $thongbao = "<div class='alert border-0 text-center py-2.5 px-3 rounded-3 fw-semibold mb-4 animate-shake' role='alert' style='background: rgba(239, 68, 68, 0.12); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.25);'><i class='fa-solid fa-circle-exclamation me-2'></i> Lỗi khi cập nhật mật khẩu mới.</div>";
                     }
                     $stmt2->close();
                 } else {
-                    $thongbao = "<div class='alert alert-warning border-0' style='background: rgba(255, 193, 7, 0.25); color: #ffe28c; backdrop-filter: blur(5px); border-radius: 10px;'><i class='fa-solid fa-triangle-exclamation me-2'></i> Mật khẩu mới không khớp với xác nhận.</div>";
+                    $thongbao = "<div class='alert border-0 text-center py-2.5 px-3 rounded-3 fw-semibold mb-4 animate-shake' role='alert' style='background: rgba(245, 158, 11, 0.12); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.25);'><i class='fa-solid fa-circle-exclamation me-2'></i> Mật khẩu mới không khớp với xác nhận.</div>";
                 }
             } else {
-                $thongbao = "<div class='alert alert-danger border-0' style='background: rgba(220, 53, 69, 0.25); color: #ffccd0; backdrop-filter: blur(5px); border-radius: 10px;'><i class='fa-solid fa-triangle-exclamation me-2'></i> Mật khẩu cũ không chính xác.</div>";
+                $thongbao = "<div class='alert border-0 text-center py-2.5 px-3 rounded-3 fw-semibold mb-4 animate-shake' role='alert' style='background: rgba(239, 68, 68, 0.12); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.25);'><i class='fa-solid fa-circle-exclamation me-2'></i> Mật khẩu hiện tại không chính xác.</div>";
             }
             $stmt->close();
         } else {
-            $thongbao = "<div class='alert alert-danger border-0' style='background: rgba(220, 53, 69, 0.25); color: #ffccd0; backdrop-filter: blur(5px); border-radius: 10px;'><i class='fa-solid fa-triangle-exclamation me-2'></i> Lỗi truy cập cơ sở dữ liệu.</div>";
+            $thongbao = "<div class='alert border-0 text-center py-2.5 px-3 rounded-3 fw-semibold mb-4 animate-shake' role='alert' style='background: rgba(239, 68, 68, 0.12); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.25);'><i class='fa-solid fa-circle-exclamation me-2'></i> Lỗi truy cập cơ sở dữ liệu.</div>";
         }
     }
 }
@@ -62,115 +62,185 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Đổi mật khẩu</title>
+    <title>Đổi mật khẩu | UNIQ</title>
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/fonts/css/all.min.css">
+    
     <style>
+        :root {
+            --primary-blue: #3b82f6;
+            --dark-bg: #090d16;
+            --glass-card: rgba(15, 23, 42, 0.45);
+        }
+
         body {
+            font-family: 'Outfit', sans-serif;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url('./assets/img/bg-newsletter.jpg') no-repeat center center/cover;
+            background: linear-gradient(rgba(9, 13, 22, 0.7), rgba(9, 13, 22, 0.85)), url('./assets/img/bg-newsletter.jpg') no-repeat center center/cover;
+            color: #f8fafc;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
 
         .change-password-card {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 35px;
-            max-width: 440px;
+            background: var(--glass-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
             width: 100%;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-            color: white;
+            max-width: 440px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .change-password-card input {
-            background: rgba(255, 255, 255, 0.2);
+        .change-password-title {
+            font-weight: 800;
+            font-size: 2.2rem;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .input-group-custom {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .input-group-custom i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .form-control-pass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 12px 16px 12px 46px;
+            color: #ffffff !important;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-pass::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .form-control-pass:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            outline: none;
+        }
+
+        .form-control-pass:focus + i {
+            color: var(--primary-blue);
+        }
+
+        .btn-update {
+            background: #ffffff;
+            color: #0f172a;
+            font-weight: 700;
+            border-radius: 50px;
             border: none;
-            color: white;
+            padding: 11px 24px;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
         }
 
-        .change-password-card input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+        .btn-update:hover {
+            background: #f1f5f9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+            color: #0f172a;
         }
 
-        .change-password-card input:focus {
-            background: rgba(255, 255, 255, 0.5);
-            color: white;
-            box-shadow: none;
+        .btn-cancel {
+            background: transparent;
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 11px 24px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
 
-        .btn-custom-success {
-            background: rgba(40, 167, 69, 0.4);
-            border: none;
-            color: white;
-            font-weight: bold;
-            transition: all 0.2s;
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #ffffff;
+            color: #ffffff;
         }
 
-        .btn-custom-success:hover {
-            background: rgba(40, 167, 69, 0.7);
-            color: white;
-        }
-
-        .btn-custom-secondary {
-            background: rgba(255, 255, 255, 0.25);
-            border: none;
-            color: white;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-
-        .btn-custom-secondary:hover {
-            background: rgba(255, 255, 255, 0.45);
-            color: white;
+        @media (max-width: 480px) {
+            .change-password-card {
+                padding: 30px 20px;
+                max-width: 90%;
+            }
+            .change-password-title {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
-<div class="change-password-card">
-    <div class="text-center mb-4">
-        <i class="fa-solid fa-key fa-3x mb-3 text-warning"></i>
-        <h3 class="fw-bold">Đổi mật khẩu</h3>
-        <p class="text-white-50 small">Cập nhật mật khẩu mới bảo mật cho tài khoản của bạn</p>
-    </div>
+<div class="change-password-card animate-fade-in">
+    
+    <!-- BRAND HEADING -->
+    <h1 class="change-password-title">UNIQ<span style="color: var(--primary-blue);">.</span></h1>
+    <p class="text-white-50 small mb-4 pb-2">Đổi mật khẩu để bảo vệ tài khoản</p>
 
+    <!-- PHP Alerts -->
     <?= $thongbao ?>
 
     <form method="POST">
-        <div class="mb-3">
-            <label for="matkhaucu" class="form-label small text-white-50">Mật khẩu hiện tại</label>
-            <div class="input-group">
-                <span class="input-group-text bg-transparent text-white border-end-0">
-                    <i class="fas fa-lock-open"></i>
-                </span>
-                <input type="password" class="form-control border-start-0" id="matkhaucu" name="matkhaucu" placeholder="Nhập mật khẩu cũ" required>
-            </div>
+        
+        <!-- Current Password -->
+        <div class="input-group-custom text-start">
+            <input type="password" class="form-control form-control-pass" id="matkhaucu" name="matkhaucu" placeholder="Nhập mật khẩu cũ..." required>
+            <i class="fas fa-lock-open"></i>
         </div>
-        <div class="mb-3">
-            <label for="matkhaumoi" class="form-label small text-white-50">Mật khẩu mới</label>
-            <div class="input-group">
-                <span class="input-group-text bg-transparent text-white border-end-0">
-                    <i class="fas fa-lock"></i>
-                </span>
-                <input type="password" class="form-control border-start-0" id="matkhaumoi" name="matkhaumoi" placeholder="Nhập mật khẩu mới" required>
-            </div>
+
+        <!-- New Password -->
+        <div class="input-group-custom text-start">
+            <input type="password" class="form-control form-control-pass" id="matkhaumoi" name="matkhaumoi" placeholder="Nhập mật khẩu mới..." required>
+            <i class="fas fa-key"></i>
         </div>
-        <div class="mb-4">
-            <label for="xacnhan" class="form-label small text-white-50">Xác nhận mật khẩu mới</label>
-            <div class="input-group">
-                <span class="input-group-text bg-transparent text-white border-end-0">
-                    <i class="fas fa-check-double"></i>
-                </span>
-                <input type="password" class="form-control border-start-0" id="xacnhan" name="xacnhan" placeholder="Xác nhận mật khẩu mới" required>
-            </div>
+
+        <!-- Confirm Password -->
+        <div class="input-group-custom text-start mb-4">
+            <input type="password" class="form-control form-control-pass" id="xacnhan" name="xacnhan" placeholder="Xác nhận mật khẩu mới..." required>
+            <i class="fas fa-shield-halved"></i>
         </div>
-        <div class="d-flex justify-content-between gap-2 mt-4">
-            <a href="index.php" class="btn btn-custom-secondary px-4 py-2 rounded-pill"><i class="fa-solid fa-arrow-left me-1"></i> Quay lại</a>
-            <button type="submit" class="btn btn-custom-success px-4 py-2 rounded-pill"><i class="fa-solid fa-circle-check me-1"></i> Cập nhật</button>
+
+        <!-- Action capsules -->
+        <div class="d-flex justify-content-between gap-3 mt-4">
+            <a href="index.php" class="btn btn-cancel flex-grow-1"><i class="fa-solid fa-arrow-left me-2"></i> Quay lại</a>
+            <button type="submit" class="btn btn-update flex-grow-1"><i class="fa-solid fa-circle-check me-2"></i> Cập nhật</button>
         </div>
+
     </form>
 </div>
+
+<script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -66,10 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userResult = $stmt->get_result();
             $user = $userResult->fetch_assoc();
 
-            $success = "Cập nhật thành công!";
+            $success = "Cập nhật thông tin thành công!";
         }
         else {
-            $error = "Cập nhật thất bại!";
+            $error = "Cập nhật thông tin thất bại!";
         }
     }
 }
@@ -79,33 +79,115 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Thay đổi thông tin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin tài khoản | UNIQ</title>
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="./assets/fonts/css/all.min.css">
     <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/css/index.css" rel="stylesheet">
+    
     <style>
-        .avatar-img-info {
-            width: 300px;
-            height: 300px;
-            object-fit: cover;
-            border: 1px solid rgba(0, 0, 0, 0.6);
+        :root {
+            --primary-color: #0d6efd;
+            --dark-color: #0f172a;
+            --card-radius: 24px;
         }
 
-        .input-cus {
-            background: #ccc;
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+
+        .profile-container {
+            margin-top: 130px;
+            margin-bottom: 80px;
+        }
+
+        .profile-card {
+            background-color: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: var(--card-radius);
+            padding: 40px;
+        }
+
+        .avatar-img-info {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 4px solid #ffffff;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .avatar-img-info:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(13, 110, 253, 0.18);
+        }
+
+        .form-control-custom {
+            border-radius: 12px;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-control-custom:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08);
+        }
+
+        .form-label-custom {
             font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-label-custom i {
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                margin-top: 100px;
+                margin-bottom: 40px;
+            }
+            .profile-card {
+                padding: 24px 16px;
+            }
         }
     </style>
 </head>
 <body>
 
-<?php include "./assets/layout/header/index.php"; ?>
+    <!-- HEADER LAYOUT -->
+    <?php include "./assets/layout/header/index.php"; ?>
 
-<?php include "./assets/layout/info/index.php"; ?>
+    <!-- PROFILE BODY -->
+    <div class="container profile-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-md-10">
+                <div class="profile-card shadow-sm">
+                    <?php include "./assets/layout/info/index.php"; ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- FOOTER LAYOUT -->
+    <?php include "./assets/layout/footer/index.php"; ?>
 
-
-<?php include "./assets/layout/footer/index.php"; ?>
-<script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
