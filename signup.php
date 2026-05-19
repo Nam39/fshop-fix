@@ -27,79 +27,94 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Kiểm tra dữ liệu
     if (empty($ten) || empty($password) || empty($email)) {
-
-        $mess = "<div style='color:red;text-align:center;'>
-                    Vui lòng không để trống thông tin!
+        $mess = "<div class='alert alert-danger py-2 border-0 text-center' role='alert' style='background: rgba(220, 53, 69, 0.25); color: #ffccd0; backdrop-filter: blur(5px); border-radius: 10px;'>
+                    <i class='fa-solid fa-triangle-exclamation me-2'></i> Vui lòng không để trống các trường bắt buộc!
                  </div>";
-
     } else {
+        // Kiểm tra trùng Email
+        $stmt_email = $conn->prepare("SELECT iduser FROM users WHERE email = ?");
+        $stmt_email->bind_param("s", $email);
+        $stmt_email->execute();
+        $res_email = $stmt_email->get_result();
 
-        // Mã hóa mật khẩu
-        // $hashedPassword = $password;
+        // Kiểm tra trùng Username
+        $stmt_user = $conn->prepare("SELECT idtk FROM taikhoan WHERE username = ?");
+        $stmt_user->bind_param("s", $ten);
+        $stmt_user->execute();
+        $res_user = $stmt_user->get_result();
 
-        // Thêm tài khoản
-        $stmt1 = $conn->prepare("
-            INSERT INTO taikhoan 
-            (username, password, roleId, trangthai, thoigiantao) 
-            VALUES (?, ?, ?, ?, ?)
-        ");
+        if ($res_email->num_rows > 0) {
+            $mess = "<div class='alert alert-danger py-2 border-0 text-center' role='alert' style='background: rgba(220, 53, 69, 0.25); color: #ffccd0; backdrop-filter: blur(5px); border-radius: 10px;'>
+                        <i class='fa-solid fa-triangle-exclamation me-2'></i> Email này đã được đăng ký cho tài khoản khác!
+                     </div>";
+            $stmt_email->close();
+            $stmt_user->close();
+        } elseif ($res_user->num_rows > 0) {
+            $mess = "<div class='alert alert-danger py-2 border-0 text-center' role='alert' style='background: rgba(220, 53, 69, 0.25); color: #ffccd0; backdrop-filter: blur(5px); border-radius: 10px;'>
+                        <i class='fa-solid fa-triangle-exclamation me-2'></i> Tên người dùng đã tồn tại! Vui lòng chọn tên khác.
+                     </div>";
+            $stmt_email->close();
+            $stmt_user->close();
+        } else {
+            $stmt_email->close();
+            $stmt_user->close();
 
-        $stmt1->bind_param(
-            "ssiis",
-            $ten,
-            $password,
-            $roleId,
-            $trangthai,
-            $thoigiantao
-        );
-
-        if ($stmt1->execute()) {
-
-            $idtk = $conn->insert_id;
-
-            // Thêm users
-            $stmt2 = $conn->prepare("
-                INSERT INTO users
-                (idtk, Ten_user, Anh_user, sdt, email, diachi, ngaysinh)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+            // Thêm tài khoản
+            $stmt1 = $conn->prepare("
+                INSERT INTO taikhoan 
+                (username, password, roleId, trangthai, thoigiantao) 
+                VALUES (?, ?, ?, ?, ?)
             ");
 
-            $stmt2->bind_param(
-                "issssss",
-                $idtk,
+            $stmt1->bind_param(
+                "ssiis",
                 $ten,
-                $anh_user,
-                $sdt,
-                $email,
-                $diachi,
-                $ngaysinh
+                $password,
+                $roleId,
+                $trangthai,
+                $thoigiantao
             );
 
-            if ($stmt2->execute()) {
+            if ($stmt1->execute()) {
+                $idtk = $conn->insert_id;
 
-                echo "<script>
-                        alert('Đăng ký thành công!');
-                        window.location.href='login.php';
-                      </script>";
-                exit();
+                // Thêm users
+                $stmt2 = $conn->prepare("
+                    INSERT INTO users
+                    (idtk, Ten_user, Anh_user, sdt, email, diachi, ngaysinh)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                ");
 
+                $stmt2->bind_param(
+                    "issssss",
+                    $idtk,
+                    $ten,
+                    $anh_user,
+                    $sdt,
+                    $email,
+                    $diachi,
+                    $ngaysinh
+                );
+
+                if ($stmt2->execute()) {
+                    echo "<script>
+                            alert('Đăng ký thành công!');
+                            window.location.href='login.php';
+                          </script>";
+                    exit();
+                } else {
+                    $mess = "<div class='alert alert-danger py-2 border-0 text-center' role='alert' style='background: rgba(220, 53, 69, 0.25); color: #ffccd0; backdrop-filter: blur(5px); border-radius: 10px;'>
+                                <i class='fa-solid fa-triangle-exclamation me-2'></i> Lỗi thêm thông tin người dùng!
+                             </div>";
+                }
+                $stmt2->close();
             } else {
-
-                $mess = "<div style='color:red;text-align:center;'>
-                            Lỗi thêm users!
+                $mess = "<div class='alert alert-danger py-2 border-0 text-center' role='alert' style='background: rgba(220, 53, 69, 0.25); color: #ffccd0; backdrop-filter: blur(5px); border-radius: 10px;'>
+                            <i class='fa-solid fa-triangle-exclamation me-2'></i> Lỗi tạo tài khoản!
                          </div>";
             }
-
-            $stmt2->close();
-
-        } else {
-
-            $mess = "<div style='color:red;text-align:center;'>
-                        Lỗi thêm tài khoản!
-                     </div>";
+            $stmt1->close();
         }
-
-        $stmt1->close();
     }
 
     $conn->close();

@@ -101,11 +101,12 @@ $totalPages = ceil($totalProducts / $limit);
         <div class="row g-2 mb-4">
             <div class="">
                 <div class="d-flex flex-wrap">
-                    <div class="col-12 col-md-6">
-                        <form action="" method="GET" class="d-flex" style="max-width: 450px;">
+                    <div class="col-12">
+                        <form action="" method="GET" class="d-flex align-items-center" style="max-width: 550px;">
                             <input type="hidden" name="page" value="qltk">
-                            <input type="text" name="queryid" class="form-control me-2" placeholder="Tìm theo tên..." style="width: 200px;">
-                            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo tên</button>
+                            <input type="text" name="queryid" class="form-control me-2" placeholder="Tìm theo tên..." style="width: 200px;" value="<?= isset($_GET['queryid']) ? htmlspecialchars($_GET['queryid']) : '' ?>">
+                            <button type="submit" class="btn btn-secondary me-2"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo tên</button>
+                            <a href="admin.php?page=qltk" class="btn btn-outline-secondary"><i class="fa-solid fa-arrows-rotate"></i> Làm mới</a>
                         </form>
                     </div>
                 </div>

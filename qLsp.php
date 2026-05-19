@@ -56,24 +56,19 @@ $totalPages = ceil($totalProducts / $limit);
     <div class="container mb-5 mt-4">
         <h2 class="text-center mb-4">Quản lý sản phẩm</h2>
 
-        <div class="row g-2 mb-4">
-            <div class="mb-3 ">
-                <div class="d-flex flex-wrap">
-                    <!-- <div class="col-12 col-md-6 mb-2">
-                        <form action="" method="GET" class="d-flex me-3" style="max-width: 400px;">
-                            <input type="text" name="query" class="form-control me-2" placeholder="Tìm kiếm sản phẩm..." style="width: 250px;">
-                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </form>
-                    </div> -->
-                    <div class="col-12 col-md-6">
-                        <form action="" method="GET" class="d-flex" style="max-width: 450px;">
-                            <input type="hidden" name="page" value="qLsp">
-                            <input type="text" name="queryid" class="form-control me-2" placeholder="Tìm theo tên sản phẩm..." style="width: 200px;">
-                            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo tên</button>
-                        </form>
-                    </div>
-
-                </div>
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+                <form action="" method="GET" class="d-flex align-items-center" style="max-width: 550px;">
+                    <input type="hidden" name="page" value="qLsp">
+                    <input type="text" name="queryid" class="form-control me-2" placeholder="Tìm theo tên sản phẩm..." style="width: 200px;" value="<?= isset($_GET['queryid']) ? htmlspecialchars($_GET['queryid']) : '' ?>">
+                    <button type="submit" class="btn btn-secondary me-2"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo tên</button>
+                    <a href="admin.php?page=qLsp" class="btn btn-outline-secondary"><i class="fa-solid fa-arrows-rotate"></i> Làm mới</a>
+                </form>
+            </div>
+            <div>
+                <a href="./ad/themsanpham.php" class="btn btn-success">
+                    <i class="fa-solid fa-circle-plus"></i> Thêm sản phẩm
+                </a>
             </div>
         </div>
 
@@ -114,13 +109,6 @@ $totalPages = ceil($totalProducts / $limit);
                     <?php endif; ?>
                 </tbody>
             </table>
-        </div>
-
-        <!-- Nút thêm sản phẩm -->
-        <div class="text-end mb-4">
-            <a href="./ad/themsanpham.php" class="btn btn-primary">
-                <i class="fa-solid fa-plus"></i> Thêm sản phẩm
-            </a>
         </div>
 
         <!-- Phân trang -->

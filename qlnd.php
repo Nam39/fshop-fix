@@ -66,10 +66,11 @@ $result = $stmt->get_result();
                         </form>
                     </div> -->
                     <div class="col-12 col-md-6">
-                        <form action="" method="GET" class="d-flex" style="max-width: 450px;">
+                        <form action="" method="GET" class="d-flex align-items-center" style="max-width: 550px;">
                             <input type="hidden" name="page" value="qlnd">
-                            <input type="text" name="queryidnd" class="form-control me-2" placeholder="Tìm theo tên..." style="width: 200px;">
-                            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo tên</button>
+                            <input type="text" name="queryidnd" class="form-control me-2" placeholder="Tìm theo tên..." style="width: 200px;" value="<?= isset($_GET['queryidnd']) ? htmlspecialchars($_GET['queryidnd']) : '' ?>">
+                            <button type="submit" class="btn btn-secondary me-2"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo tên</button>
+                            <a href="admin.php?page=qlnd" class="btn btn-outline-secondary"><i class="fa-solid fa-arrows-rotate"></i> Làm mới</a>
                         </form>
                     </div>
 
