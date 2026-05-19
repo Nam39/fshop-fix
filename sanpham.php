@@ -225,15 +225,18 @@ if (!empty($search)) {
 
         /* Pagination custom style */
         .page-link-custom {
-            width: 40px;
-            height: 40px;
-            font-size: 0.95rem;
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 0.95rem !important;
             transition: all 0.2s;
             border-radius: 50% !important;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-weight: 600 !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+            text-align: center !important;
         }
 
         @media (max-width: 768px) {
@@ -398,10 +401,7 @@ if (!empty($search)) {
                             $isCurrent = ($page == $i);
                         ?>
                             <li class="page-item <?= $isCurrent ? 'active' : '' ?>">
-                                <a class="page-link page-link-custom border-light-subtle shadow-sm <?= $isCurrent ? 'bg-primary text-white border-primary' : 'bg-white text-secondary hover-bg-light' ?>" 
-                                   href="<?= $link ?>">
-                                    <?= $i ?>
-                                </a>
+                                <a class="page-link page-link-custom border-light-subtle shadow-sm <?= $isCurrent ? 'bg-primary text-white border-primary' : 'bg-white text-secondary hover-bg-light' ?>" href="<?= $link ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
                     </ul>
