@@ -147,6 +147,7 @@ $result = search($conn, 'taikhoan', ['username'], 'idtk', 10, $page_num);
         <a href="?page=qLsp" class="menu-link"><i class="fa-brands fa-product-hunt me-1"></i>Quản lý sản phẩm</a>
         <a href="?page=qlnd" class="menu-link"><i class="fa-solid fa-user me-1"></i>Người dùng</a>
         <a href="?page=qldh" class="menu-link"><i class="fas fa-box me-1"></i>Đơn hàng</a>
+        <a href="?page=qlvc" class="menu-link"><i class="fa-solid fa-ticket me-1"></i>Quản lý Voucher</a>
     </div>
 
     <div class="navbar-custom">
@@ -188,7 +189,7 @@ $result = search($conn, 'taikhoan', ['username'], 'idtk', 10, $page_num);
 
 
     <!-- Bootstrap JS -->
-    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
         const toggleButton = document.getElementById('toggleSidebar');
         const sidebar = document.getElementById('sidebar');

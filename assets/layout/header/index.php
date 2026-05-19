@@ -65,6 +65,7 @@ if (isset($_SESSION['idtk'])) {
             display: none;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             padding: 10px 0;
+            height: auto !important;
         }
 
         .box-name {
@@ -128,6 +129,7 @@ if (isset($_SESSION['idtk'])) {
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link active" href="./index.php">Trang chủ</a></li>
                     <li class="nav-item"><a class="nav-link active" href="./sanpham.php">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="./voucher.php"><i class="fa-solid fa-ticket mx-1"></i>Voucher</a></li>
                     <li class="nav-item"><a class="nav-link" href="./giohang.php"><i class="fa-solid fa-cart-shopping text-secondary mx-1"></i>Giỏ hàng <span class="badge bg-danger"></span></a></li>
                 </ul>
 

@@ -7,7 +7,71 @@ $messl = "";
 //     $messl = "Bạn cần đăng nhập để xem giỏ hàng.";
 // }
 if (!isset($_SESSION['idtk'])) {
-    die("Bạn cần đăng nhập để xem giỏ hàng.");
+    ?>
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Giỏ hàng | UNIQ</title>
+        <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./assets/fonts/css/all.min.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: #f8f9fa;
+            }
+            .login-prompt-container {
+                margin-top: 140px;
+                margin-bottom: 80px;
+            }
+            .glass-card {
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                border-radius: 20px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+                padding: 40px;
+            }
+            .icon-circle {
+                width: 80px;
+                height: 80px;
+                background-color: rgba(13, 110, 253, 0.1);
+                color: #0d6efd;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <?php include "./assets/layout/header/index.php"; ?>
+
+        <main class="container login-prompt-container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <div class="glass-card">
+                        <div class="icon-circle">
+                            <i class="fa-solid fa-lock fa-2x"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-3">🔑 Yêu cầu Đăng nhập</h3>
+                        <p class="text-secondary mb-4">Để xem các sản phẩm trong giỏ hàng và tiến hành đặt hàng thanh toán, vui lòng đăng nhập tài khoản của bạn.</p>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <a href="login.php" class="btn btn-primary btn-lg px-4 rounded-pill"><i class="fa-solid fa-right-to-bracket me-2"></i>Đăng nhập ngay</a>
+                            <a href="signup.php" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">Tạo tài khoản</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <?php include "./assets/layout/footer/index.php"; ?>
+        <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
+    <?php
+    exit();
 }
 
 $conn = connectData();
