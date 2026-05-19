@@ -150,7 +150,7 @@ $conn->close();
                     <img src="./assets/img/<?= $product['Anh'] ?>" class="img-fluid rounded mb-3 product-image " id="mainImage">
                 </div>
                 <div class="d-flex justify-content-between">
-                    <img src="./assets/img/giay2.jpg?>" alt="Thumbnail 1" class="thumbnail rounded active" onclick="changeImage(event, this.src)">
+                    <img src="./assets/img/giay2.jpg" alt="Thumbnail 1" class="thumbnail rounded active" onclick="changeImage(event, this.src)">
                     <img src="./assets/img/<?= $product['Anh'] ?>" alt="Thumbnail 2" class="thumbnail rounded" onclick="changeImage(event, this.src)">
                     <img src="./assets/img/<?= $product['Anh'] ?>" alt="Thumbnail 3" class="thumbnail rounded" onclick="changeImage(event, this.src)">
                     <img src="./assets/img/<?= $product['Anh'] ?>" alt="Thumbnail 4" class="thumbnail rounded" onclick="changeImage(event, this.src)">
@@ -196,9 +196,9 @@ $conn->close();
                             <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
                         </button>
 
-                        <button class="btn btn-outline-secondary btn-lg mb-2 mt-3">
-                            <a href="./index.php" class="text-decoration-none">Quay lai</a>
-                        </button>
+                        <a href="./index.php" class="btn btn-outline-secondary btn-lg mt-2 ms-2 text-decoration-none">
+                            Quay lại
+                        </a>
                     </form>
                 </div>
 

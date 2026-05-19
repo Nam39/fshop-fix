@@ -278,52 +278,6 @@ if (!empty($search)) {
         include "./assets/layout/header/index.php"
         ?>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow position-fixed nav">
-            <div class="container">
-                <a class="navbar-brand fw-bold text-primary" href="./">UNIQ</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="nav-link active" href="./index.php">Trang chủ</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="./sanpham.php">Sản phẩm</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./giohang.php"><i class="fa-solid fa-cart-shopping text-secondary mx-1"></i>Giỏ hàng <span class="badge bg-danger"></span></a></li>
-                    </ul>
-
-                    <form class="d-flex me-3">
-                        <input class="form-control me-2  border border-dark" type="search" name="query" placeholder="Tìm kiếm sản phẩm...">
-                        <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>
-
-                    <div class="ms-auto">
-                        <?php if (isset($_SESSION['idtk'])): ?>
-                            <div class="user-img aff d-flex align-items-center justify-content-center position-relative">
-                                <img src="./assets/img/<?= $_SESSION['Anh_user'] ?>" alt="Avatar" class="rounded-circle avatar-img" width="40" height="40">
-                                <p class="box-name px-2 d-flex align-items-center mb-0 ms-2">
-                                    <?= htmlspecialchars($_SESSION['Ten_user']) ?>
-                                    <i class="fa-solid fa-sort-down mx-1 mb-1"></i>
-                                </p>
-
-                                <div class="box text-start">
-                                    <a href="./thongtinuser.php">Thông tin chi tiết</a>
-                                    <a href="./donhang.php">Đơn hàng của tôi</a>
-                                    <a href="./doimatkhau.php">Đổi mật khẩu</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="./logout.php" class="logoutbtn" onclick="return confirm('Bạn có muốn đăng xuất không?');">Đăng xuất</a>
-                                </div>
-
-                                <div class="aff-child"></div>
-                            </div>
-                        <?php else: ?>
-                            <a href="login.php" class="btn btn-primary">Đăng nhập</a>
-                            <a href="signup.php" class="btn btn-secondary">Đăng ký</a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-        </nav>
-
 
         <div id="myCarousel" class="carousel slide bg-dark mt-4 mb-4" data-bs-ride="carousel">
             <div class="carousel-indicators">

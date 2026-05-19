@@ -12,12 +12,7 @@ function delete($table, $idColumn)
         $stmt->bind_param("i", $id);
 
         if ($stmt->execute()) {
-            $conn->query("SET @num = 0");
-            $conn->query("UPDATE $table SET $idColumn = @num := @num + 1");
-
-            $conn->query("ALTER TABLE $table AUTO_INCREMENT = 1");
-
-            header("Location: .././admin.php");
+            header("Location: .././admin.php?page=qLsp");
             exit();
         } else {
             echo "Lỗi khi xóa: " . $conn->error;

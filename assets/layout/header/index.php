@@ -8,12 +8,12 @@ $conn = connectData();
 
 if (isset($_SESSION['idtk'])) {
     $idtk = $_SESSION['idtk'];
-    $sql = "SELECT Ten_user, Anh_user FROM users WHERE idtk = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $idtk);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $userInfo = $result->fetch_assoc();
+    $sql_user_header = "SELECT Ten_user, Anh_user FROM users WHERE idtk = ?";
+    $stmt_user_header = $conn->prepare($sql_user_header);
+    $stmt_user_header->bind_param("i", $idtk);
+    $stmt_user_header->execute();
+    $result_user_header = $stmt_user_header->get_result();
+    $userInfo = $result_user_header->fetch_assoc();
 
     if ($userInfo) {
         $_SESSION['Ten_user'] = $userInfo['Ten_user'];
@@ -30,7 +30,7 @@ if (isset($_SESSION['idtk'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link href="././bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         html a {
@@ -126,7 +126,7 @@ if (isset($_SESSION['idtk'])) {
                     <li class="nav-item"><a class="nav-link" href="./giohang.php"><i class="fa-solid fa-cart-shopping text-secondary mx-1"></i>Giỏ hàng <span class="badge bg-danger"></span></a></li>
                 </ul>
 
-                <form class="d-flex me-3">
+                <form action="./sanpham.php" method="GET" class="d-flex me-3">
                     <input class="form-control me-2  border border-dark" type="search" name="query" placeholder="Tìm kiếm sản phẩm...">
                     <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>

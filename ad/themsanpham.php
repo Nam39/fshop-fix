@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_dir = ".././assets/img/";
         $target_file = $target_dir . basename($_FILES["Anh"]["name"]);
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        $allowed_types = ["jpg", "png", "jpeg", "gif", "WEBP"];
+        $allowed_types = ["jpg", "png", "jpeg", "gif", "webp"];
 
         if (in_array($imageFileType, $allowed_types)) {
             if (move_uploaded_file($_FILES["Anh"]["tmp_name"], $target_file)) {
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('$Ten', '$MoTa', '$Gia', '$SoLuong', '$Anh', '$id_DanhMuc')";
 
         if ($conn->query($sql) === TRUE) {
-            header("Location: .././admin.php");
+            header("Location: .././admin.php?page=qLsp");
             exit();
         } else {
             echo "Lỗi thêm sản phẩm: " . $conn->error;
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-success mt-4 mb-4 px-4"> Thêm </button>
-                        <a href=".././admin.php" class="btn btn-primary mt-4 mb-4 px-4">Quay lại</a>
+                        <a href=".././admin.php?page=qLsp" class="btn btn-primary mt-4 mb-4 px-4">Quay lại</a>
                     </div>
                 </form>
             </div>
