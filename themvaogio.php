@@ -4,7 +4,7 @@ include "./connect_DB/connect_db.php";
 
 // Kiểm tra đăng nhập
 if (!isset($_SESSION['idtk'])) {
-    header("Location: details.php?error=notloggedin");
+    header("Location: login.php");
     exit();
 }
 
@@ -35,7 +35,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
-    header("Location: details.php?error=notfound");
+    header("Location: index.php?error=notfound");
     exit();
 }
 

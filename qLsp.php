@@ -10,32 +10,35 @@ $limit = 8;
 $page = isset($_GET['p']) && is_numeric($_GET['p']) && $_GET['p'] > 0 ? (int)$_GET['p'] : 1;
 $offset = ($page - 1) * $limit;
 
-$totalQuery = "SELECT COUNT(*) AS total FROM sanpham";
-$totalResult = $conn->query($totalQuery);
-$totalRow = $totalResult->fetch_assoc();
-$totalProducts = $totalRow['total'];
-$totalPages = ceil($totalProducts / $limit);
-
-if (isset($_GET['query']) && !empty($_GET['query'])) {
-    $search = trim($_GET['query']);
-    $sql = "SELECT * FROM sanpham WHERE Ten LIKE ? OR MoTa LIKE ? LIMIT $limit OFFSET $offset";
-    $stmt = $conn->prepare($sql);
-    $search_param = "%" . $search . "%";
-    $stmt->bind_param("ss", $search_param, $search_param);
-    $stmt->execute();
-    $result = $stmt->get_result();
-} else if (isset($_GET['queryid']) && !empty($_GET['queryid'])) {
+if (isset($_GET['queryid']) && !empty($_GET['queryid'])) {
     $search = trim($_GET['queryid']);
-    $sql = "SELECT * FROM sanpham WHERE id LIKE ? LIMIT $limit OFFSET $offset";
-    $stmt = $conn->prepare($sql);
+    
+    // Calculate total pages for this search query
+    $countSql = "SELECT COUNT(*) AS total FROM sanpham WHERE Ten LIKE ?";
+    $stmtCount = $conn->prepare($countSql);
     $search_param = "%" . $search . "%";
+    $stmtCount->bind_param("s", $search_param);
+    $stmtCount->execute();
+    $totalRow = $stmtCount->get_result()->fetch_assoc();
+    $totalProducts = $totalRow['total'];
+    $stmtCount->close();
+
+    $sql = "SELECT * FROM sanpham WHERE Ten LIKE ? LIMIT $limit OFFSET $offset";
+    $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $search_param);
     $stmt->execute();
     $result = $stmt->get_result();
 } else {
+    // Normal total count
+    $totalQuery = "SELECT COUNT(*) AS total FROM sanpham";
+    $totalResult = $conn->query($totalQuery);
+    $totalRow = $totalResult->fetch_assoc();
+    $totalProducts = $totalRow['total'];
+
     $sql = "SELECT * FROM sanpham LIMIT $limit OFFSET $offset";
     $result = $conn->query($sql);
 }
+$totalPages = ceil($totalProducts / $limit);
 ?>
 
 <!DOCTYPE html>
@@ -63,9 +66,10 @@ if (isset($_GET['query']) && !empty($_GET['query'])) {
                         </form>
                     </div> -->
                     <div class="col-12 col-md-6">
-                        <form action="" method="GET" class="d-flex" style="max-width: 400px;">
-                            <input type="text" name="queryid" class="form-control me-2" placeholder="Tìm kiếm theo ID..." style="width: 150px;">
-                            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo ID</button>
+                        <form action="" method="GET" class="d-flex" style="max-width: 450px;">
+                            <input type="hidden" name="page" value="qLsp">
+                            <input type="text" name="queryid" class="form-control me-2" placeholder="Tìm theo tên sản phẩm..." style="width: 200px;">
+                            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo tên</button>
                         </form>
                     </div>
 

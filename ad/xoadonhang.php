@@ -22,7 +22,7 @@ if (isset($_GET['idDonHang'])) {
             // $conn->query("ALTER TABLE donhang
             // AUTO_INCREMENT = 1");
 
-            header("Location: .././admin.php");
+            header("Location: .././admin.php?page=qldh");
             exit();
         } else {
             echo "Lỗi khi xóa: " . $conn->error;

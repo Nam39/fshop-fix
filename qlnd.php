@@ -3,7 +3,7 @@ include "./connect_DB/connect_db.php";
 
 $conn = connectData();
 
-$limit = 12;
+$limit = 8;
 $page = isset($_GET['p']) && is_numeric($_GET['p']) && $_GET['p'] > 0 ? (int)$_GET['p'] : 1;
 $offset = ($page - 1) * $limit;
 
@@ -15,10 +15,10 @@ $queryString = '';
 
 if (!empty($_GET['queryidnd'])) {
     $search = trim($_GET['queryidnd']);
-    $whereClause = "WHERE id LIKE ?";
+    $whereClause = "WHERE Ten_user LIKE ?";
     $params = ["%$search%"];
     $types = "s";
-    $queryString = '&queryid=' . urlencode($search);
+    $queryString = '&queryidnd=' . urlencode($search);
 }
 
 $countSql = "SELECT COUNT(*) AS total FROM users $whereClause";
@@ -66,9 +66,10 @@ $result = $stmt->get_result();
                         </form>
                     </div> -->
                     <div class="col-12 col-md-6">
-                        <form action="" method="GET" class="d-flex" style="max-width: 400px;">
-                            <input type="text" name="queryidnd" class="form-control me-2" placeholder="Tìm kiếm theo ID..." style="width: 150px;">
-                            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo ID</button>
+                        <form action="" method="GET" class="d-flex" style="max-width: 450px;">
+                            <input type="hidden" name="page" value="qlnd">
+                            <input type="text" name="queryidnd" class="form-control me-2" placeholder="Tìm theo tên..." style="width: 200px;">
+                            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo tên</button>
                         </form>
                     </div>
 
@@ -98,7 +99,7 @@ $result = $stmt->get_result();
                                 <td><img src="./assets/img/<?= $row['Anh_user'] ?>" class="img-fluid rounded" style="max-width: 60px;"></td>
                                 <td><?= $row['sdt'] ?></td>
                                 <td><?= htmlspecialchars($row['email']) ?></td>
-                                <td><a href="./ad/suasanpham.php?id=<?= $row['iduser'] ?>" class="btn btn-warning btn-sm">Sửa</a></td>
+                                <td><a href="./ad/suauser.php?id=<?= $row['iduser'] ?>" class="btn btn-warning btn-sm">Sửa</a></td>
                                 <td><a href="./ad/xoauser.php?iduser=<?= $row['iduser'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa không?');">Xóa</a></td>
                             </tr>
                         <?php endwhile; ?>

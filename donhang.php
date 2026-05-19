@@ -238,30 +238,6 @@ function hienThiTrangThai($status)
     $detailResult = $stmtDetail->get_result();
     ?>
 
-    <?php
-    $idDonHang = $row['idDonHang'];
-
-    $sqlDetail = "
-        SELECT
-            chitietdonhang.soluong,
-            chitietdonhang.gia,
-            sanpham.Ten,
-            sanpham.Anh,
-            danhmucsanpham.Ten_DanhMuc
-        FROM chitietdonhang
-        JOIN sanpham
-            ON chitietdonhang.idsanpham = sanpham.id
-        LEFT JOIN danhmucsanpham
-            ON sanpham.id_DanhMuc = danhmucsanpham.id_DanhMuc
-        WHERE chitietdonhang.iddonhang = ?
-    ";
-
-    $stmtDetail = $conn->prepare($sqlDetail);
-    $stmtDetail->bind_param("i", $idDonHang);
-    $stmtDetail->execute();
-    $detailResult = $stmtDetail->get_result();
-    ?>
-
     <tr>
 
         <td class="order-id">

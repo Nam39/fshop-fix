@@ -34,27 +34,37 @@ $limit = 8;
 $page = isset($_GET['p']) && is_numeric($_GET['p']) && $_GET['p'] > 0 ? (int)$_GET['p'] : 1;
 $offset = ($page - 1) * $limit;
 
-$totalQuery = "SELECT COUNT(*) AS total FROM taikhoan";
-$totalResult = $conn->query($totalQuery);
-$totalRow = $totalResult->fetch_assoc();
-$totalProducts = $totalRow['total'];
-$totalPages = ceil($totalProducts / $limit);
-
 if (isset($_GET['queryid']) && !empty($_GET['queryid'])) {
     $search = trim($_GET['queryid']);
+    
+    // Calculate total pages for this search query
+    $countSql = "SELECT COUNT(*) AS total FROM taikhoan WHERE username LIKE ?";
+    $stmtCount = $conn->prepare($countSql);
+    $search_param = "%" . $search . "%";
+    $stmtCount->bind_param("s", $search_param);
+    $stmtCount->execute();
+    $totalRow = $stmtCount->get_result()->fetch_assoc();
+    $totalProducts = $totalRow['total'];
+    $stmtCount->close();
+
     $sql = "
         SELECT tk.*, r.Ten 
         FROM taikhoan tk 
         LEFT JOIN role r ON tk.roleId = r.roleId 
-        WHERE tk.idtk LIKE ? 
+        WHERE tk.username LIKE ? 
         LIMIT $limit OFFSET $offset
     ";
     $stmt = $conn->prepare($sql);
-    $search_param = "%" . $search . "%";
     $stmt->bind_param("s", $search_param);
     $stmt->execute();
     $result = $stmt->get_result();
 } else {
+    // Normal total count
+    $totalQuery = "SELECT COUNT(*) AS total FROM taikhoan";
+    $totalResult = $conn->query($totalQuery);
+    $totalRow = $totalResult->fetch_assoc();
+    $totalProducts = $totalRow['total'];
+
     $sql = "
         SELECT tk.*, r.Ten
         FROM taikhoan tk 
@@ -63,6 +73,7 @@ if (isset($_GET['queryid']) && !empty($_GET['queryid'])) {
     ";
     $result = $conn->query($sql);
 }
+$totalPages = ceil($totalProducts / $limit);
 ?>
 
 
@@ -91,9 +102,10 @@ if (isset($_GET['queryid']) && !empty($_GET['queryid'])) {
             <div class="">
                 <div class="d-flex flex-wrap">
                     <div class="col-12 col-md-6">
-                        <form action="" method="GET" class="d-flex" style="max-width: 400px;">
-                            <input type="text" name="queryid" class="form-control me-2" placeholder="Tìm theo ID..." style="width: 150px;">
-                            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo ID</button>
+                        <form action="" method="GET" class="d-flex" style="max-width: 450px;">
+                            <input type="hidden" name="page" value="qltk">
+                            <input type="text" name="queryid" class="form-control me-2" placeholder="Tìm theo tên..." style="width: 200px;">
+                            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i> Tìm theo tên</button>
                         </form>
                     </div>
                 </div>
@@ -148,11 +160,7 @@ if (isset($_GET['queryid']) && !empty($_GET['queryid'])) {
             </table>
         </div>
 
-        <div class="text-end mb-4">
-            <a href="./ad/themsanpham.php" class="btn btn-primary">
-                <i class="fa-solid fa-plus"></i>
-            </a>
-        </div>
+
 
         <?php include "./assets/layout/navigation/navigation.php" ?>
     </div>

@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "UPDATE sanpham SET Ten='$ten', MoTa='$mota', SoLuong='$soluong', Gia='$gia', Anh='$anh', id_DanhMuc='$danhmuc' WHERE id=$id";
 
     if ($conn->query($sql) === TRUE) {
-        header("Location: ../admin.php");
+        header("Location: ../admin.php?page=qLsp");
         exit();
     } else {
         echo "Lỗi cập nhật: " . $conn->error;
@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-success mt-4 mb-4 px-4"> Sửa </button>
-                        <a href=".././admin.php" class="btn btn-primary mt-4 mb-4 px-4">Quay lại</a>
+                        <a href=".././admin.php?page=qLsp" class="btn btn-primary mt-4 mb-4 px-4">Quay lại</a>
                     </div>
                 </form>
             </div>
