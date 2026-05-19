@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $step = 2;
                 $mess = "";
             } else {
-                $mess = "Tên đăng nhập, Email hoặc Số điện thoại không chính xác!";
+                $mess = "Thông tin xác thực tài khoản không chính xác!";
             }
             $stmt->close();
         }
@@ -74,134 +74,219 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Quên mật khẩu</title>
+    <title>Quên mật khẩu | UNIQ</title>
+    
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/fonts/css/all.min.css">
+    
     <style>
+        :root {
+            --primary-blue: #3b82f6;
+            --dark-bg: #090d16;
+            --glass-card: rgba(15, 23, 42, 0.45);
+        }
+
         body {
+            font-family: 'Outfit', sans-serif;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url('./assets/img/bg-newsletter.jpg') no-repeat center center/cover;
+            background: linear-gradient(rgba(9, 13, 22, 0.7), rgba(9, 13, 22, 0.85)), url('./assets/img/bg-newsletter.jpg') no-repeat center center/cover;
+            color: #f8fafc;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
 
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        .forgot-password-card {
+            background: var(--glass-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
             width: 100%;
             max-width: 420px;
-            color: white;
             text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .glassmorphism input {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
+        .forgot-password-title {
+            font-weight: 800;
+            font-size: 2.2rem;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            margin-bottom: 5px;
         }
 
-        .glassmorphism input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+        .input-group-custom {
+            position: relative;
+            margin-bottom: 16px;
         }
 
-        .glassmorphism input:focus {
-            background: rgba(255, 255, 255, 0.6);
+        .input-group-custom i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .form-control-forgot {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 12px 16px 12px 46px;
+            color: #ffffff !important;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-forgot::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .form-control-forgot:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
             outline: none;
-            box-shadow: none;
-            color: white;
         }
 
-        .btn-custom {
-            background: rgba(255, 255, 255, 0.3);
+        .form-control-forgot:focus + i {
+            color: var(--primary-blue);
+        }
+
+        .btn-action {
+            background: #ffffff;
+            color: #0f172a;
+            font-weight: 700;
+            border-radius: 50px;
             border: none;
-            color: white;
-            font-weight: bold;
-            padding: 10px;
+            padding: 12px;
+            font-size: 1rem;
+            letter-spacing: 0.02em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
         }
 
-        .btn-custom:hover {
-            background: rgba(255, 255, 255, 0.5);
-            color: white;
+        .btn-action:hover {
+            background: #f1f5f9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+            color: #0f172a;
         }
 
-        @media (max-width: 768px) {
-            .glassmorphism {
-                padding: 20px;
+        .btn-cancel {
+            background: transparent;
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 11px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        .forgot-alert {
+            background: rgba(239, 68, 68, 0.12) !important;
+            border: 1px solid rgba(239, 68, 68, 0.25) !important;
+            color: #fca5a5 !important;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .forgot-password-card {
+                padding: 30px 20px;
                 max-width: 90%;
+            }
+            .forgot-password-title {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="glassmorphism">
-    <h2 class="fw-bold mb-2">Quên mật khẩu</h2>
+<div class="forgot-password-card animate-fade-in">
     
+    <!-- BRAND HEADING -->
+    <h1 class="forgot-password-title">UNIQ<span style="color: var(--primary-blue);">.</span></h1>
+
     <?php if ($step == 1): ?>
-        <p class="text-white-50 mb-4 small">Nhập thông tin đăng ký để khôi phục mật khẩu</p>
+        <p class="text-white-50 small mb-4 pb-2">Nhập thông tin xác thực để lấy lại quyền truy cập</p>
+        
         <form method="POST">
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text bg-transparent text-white border-end-0">
-                        <i class="fas fa-user"></i>
-                    </span>
-                    <input type="text" name="username" class="form-control border-start-0" placeholder="Tên đăng nhập" required>
-                </div>
-            </div>
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text bg-transparent text-white border-end-0">
-                        <i class="fas fa-envelope"></i>
-                    </span>
-                    <input type="email" name="email" class="form-control border-start-0" placeholder="Email đăng ký" required>
-                </div>
-            </div>
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text bg-transparent text-white border-end-0">
-                        <i class="fas fa-phone"></i>
-                    </span>
-                    <input type="text" name="sdt" class="form-control border-start-0" placeholder="Số điện thoại đăng ký" required>
-                </div>
+            <!-- Username Input -->
+            <div class="input-group-custom">
+                <input type="text" name="username" class="form-control form-control-forgot" placeholder="Nhập tên tài khoản..." required>
+                <i class="fas fa-user"></i>
             </div>
             
-            <button type="submit" name="verify" class="btn btn-custom w-100 mt-3 rounded-pill">Xác thực tài khoản</button>
-            <a href="?cancel=1" class="btn btn-outline-light w-100 mt-2 rounded-pill small">Quay lại đăng nhập</a>
+            <!-- Email Input -->
+            <div class="input-group-custom">
+                <input type="email" name="email" class="form-control form-control-forgot" placeholder="Nhập Email đăng ký..." required>
+                <i class="fas fa-envelope"></i>
+            </div>
+            
+            <!-- Phone Input -->
+            <div class="input-group-custom mb-4">
+                <input type="text" name="sdt" class="form-control form-control-forgot" placeholder="Nhập Số điện thoại..." required>
+                <i class="fas fa-phone"></i>
+            </div>
+            
+            <!-- Actions -->
+            <button type="submit" name="verify" class="btn btn-action w-100 mb-3"><i class="fa-solid fa-shield-halved me-2"></i> Xác thực tài khoản</button>
+            <a href="?cancel=1" class="btn btn-cancel w-100 d-block"><i class="fa-solid fa-arrow-left me-2"></i> Quay lại đăng nhập</a>
         </form>
+
     <?php else: ?>
-        <p class="text-white-50 mb-4 small">Xác thực thành công! Hãy nhập mật khẩu mới của bạn.</p>
+        <p class="text-white-50 small mb-4 pb-2">Xác thực thành công! Nhập mật khẩu mới bên dưới</p>
+        
         <form method="POST">
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text bg-transparent text-white border-end-0">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                    <input type="password" name="new_password" class="form-control border-start-0" placeholder="Mật khẩu mới" required>
-                </div>
-            </div>
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text bg-transparent text-white border-end-0">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                    <input type="password" name="confirm_password" class="form-control border-start-0" placeholder="Xác nhận mật khẩu mới" required>
-                </div>
+            <!-- New Password -->
+            <div class="input-group-custom">
+                <input type="password" name="new_password" class="form-control form-control-forgot" placeholder="Nhập mật khẩu mới..." required>
+                <i class="fas fa-lock"></i>
             </div>
             
-            <button type="submit" name="reset" class="btn btn-custom w-100 mt-3 rounded-pill">Đặt lại mật khẩu</button>
-            <a href="?cancel=1" class="btn btn-outline-light w-100 mt-2 rounded-pill">Hủy bỏ</a>
+            <!-- Confirm Password -->
+            <div class="input-group-custom mb-4">
+                <input type="password" name="confirm_password" class="form-control form-control-forgot" placeholder="Xác nhận mật khẩu mới..." required>
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            
+            <!-- Actions -->
+            <button type="submit" name="reset" class="btn btn-action w-100 mb-3"><i class="fa-solid fa-circle-check me-2"></i> Đặt lại mật khẩu</button>
+            <a href="?cancel=1" class="btn btn-cancel w-100 d-block"><i class="fa-solid fa-xmark me-2"></i> Hủy bỏ</a>
         </form>
     <?php endif; ?>
 
+    <!-- Alert error notifications -->
     <?php if (!empty($mess)): ?>
-        <div class="alert alert-danger mt-3 py-2 border-0 text-center" role="alert" style="background: rgba(220, 53, 69, 0.25); color: #ffccd0; backdrop-filter: blur(5px); border-radius: 10px;">
-            <i class="fa-solid fa-triangle-exclamation me-2"></i> <?= htmlspecialchars($mess) ?>
+        <div class="alert forgot-alert mt-4 py-2.5 px-3 border-0 text-center animate-shake" role="alert">
+            <i class="fa-solid fa-circle-exclamation me-2"></i> <?= htmlspecialchars($mess) ?>
         </div>
     <?php endif; ?>
+    
 </div>
 
 <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
